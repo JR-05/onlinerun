@@ -7,7 +7,7 @@ import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 /**
- * @author RhettPeng
+ * @author JR
  */
 public class DockerConfig {
     public static String DOCKER_HOST;

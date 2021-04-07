@@ -8,7 +8,7 @@ import java.util.Map;
 
 /**
  * HTTP RestApi响应
- * @author RhettPeng
+ * @author JR
  */
 public class Result {
     /**

@@ -4,10 +4,10 @@ import cn.hutool.json.JSONUtil;
 import com.runcode.entities.CodeWrapperDTO;
 
 /**
- * @author RhettPeng
+ * @author JR
  */
 public class CodeWrapperUtil {
-    public static CodeWrapperDTO fromJson(String jsonObject){
+    public static CodeWrapperDTO fromJson(String jsonObject) {
         return JSONUtil.toBean(jsonObject, CodeWrapperDTO.class);
     }
 }

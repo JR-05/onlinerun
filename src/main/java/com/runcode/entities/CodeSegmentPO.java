@@ -6,7 +6,7 @@ import java.util.Date;
 
 /**
  * 数据库存储的对象
- * @author RhettPeng
+ * @author JR
  */
 @Data
 public class CodeSegmentPO {

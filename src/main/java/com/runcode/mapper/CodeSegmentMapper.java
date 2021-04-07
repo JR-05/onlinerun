@@ -3,7 +3,7 @@ package com.runcode.mapper;
 import com.runcode.entities.CodeSegmentPO;
 
 /**
- * @author RhettPeng
+ * @author JR
  */
 public interface CodeSegmentMapper {
     /**

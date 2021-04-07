@@ -1,14 +1,13 @@
 package com.runcode.utils;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 /**
- * @author RhettPeng
+ * @author JR
  */
 public class UserConfig {
     public static String PASSWORD;

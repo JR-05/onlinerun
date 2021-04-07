@@ -1,0 +1,7 @@
+POST http://localhost:7001/run
+Content-Type: application/json
+
+{
+"langType": "java",
+  "content": "class Untitled { public static void main(String[] args) { System.out.println(\"hello codetoo!\"); } }"
+}

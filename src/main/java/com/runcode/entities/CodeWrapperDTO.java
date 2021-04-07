@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * 前端发来的websocket请求
- * @author RhettPeng
+ * @author JR
  */
 @Data
 public class CodeWrapperDTO {

@@ -10,7 +10,7 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 
 /**
- * @author RhettPeng
+ * @author JR
  */
 public class WebSocketChannelInitializer extends ChannelInitializer<SocketChannel> {
 

@@ -1,17 +1,16 @@
 package com.runcode.entities;
 
-import cn.hutool.core.util.IdUtil;
-
 /**
  * 各种编程语言的枚举
- * @author RhettPeng
+ *
+ * @author JR
  */
 
 public enum CodeLang {
     /**
      * Python语言
      */
-    PYTHON3{
+    PYTHON3 {
         @Override
         public String getImageName() {
             return "python:3";
@@ -24,18 +23,18 @@ public enum CodeLang {
 
         @Override
         public String[][] getExecCommand(String fileName) {
-            return new String[][]{{"python",fileName}};
+            return new String[][]{{"python", fileName}};
         }
 
         @Override
-        public String getFileName() {
-            return "temp.py";
+        public String getFileNameSuffix() {
+            return ".py";
         }
     },
     /**
      * C++语言
      */
-    CPP{
+    CPP {
         @Override
         public String getImageName() {
             return "gcc:7.3";
@@ -48,18 +47,18 @@ public enum CodeLang {
 
         @Override
         public String[][] getExecCommand(String fileName) {
-            return new String[][]{{"g++",fileName,"-o","temp"},{"./temp"}};
+            return new String[][]{{"g++", fileName, "-o", "temp"}, {"./temp"}};
         }
 
         @Override
-        public String getFileName() {
-            return "temp.cpp";
+        public String getFileNameSuffix() {
+            return ".cpp";
         }
     },
     /**
      * JAVA语言
      */
-    JAVA{
+    JAVA {
         @Override
         public String getImageName() {
             return "openjdk:11";
@@ -69,23 +68,22 @@ public enum CodeLang {
         public String getContainerNamePrefix() {
             return "java-running-file-";
         }
-        
+
         @Override
         public String[][] getExecCommand(String fileName) {
             // jdk11可以不经过javac
-            return new String[][]{{"java",fileName}};
+            return new String[][]{{"java", fileName}};
         }
 
         @Override
-        public String getFileName() {
-            return "Untitled.java";
+        public String getFileNameSuffix() {
+            return ".java";
         }
-
     },
     /**
      * Go语言
      */
-    GOLANG{
+    GOLANG {
         @Override
         public String getImageName() {
             return "golang:1.14";
@@ -99,39 +97,52 @@ public enum CodeLang {
         @Override
         public String[][] getExecCommand(String fileName) {
             // Go可不经过编译
-            return new String[][]{{"go","run",fileName}};
+            return new String[][]{{"go", "run", fileName}};
         }
 
         @Override
-        public String getFileName() {
-            return "temp.go";
+        public String getFileNameSuffix() {
+            return ".go";
         }
-
     };
 
     /**
      * 镜像名称
      */
-    public String getImageName(){
+    public String getImageName() {
         return null;
     }
 
     /**
      * 容器名称前缀
      */
-    public String getContainerNamePrefix(){
+    public String getContainerNamePrefix() {
         return null;
     }
 
     /**
      * 执行该文件需要的指令，供Docker EXEC调用
      */
-    public String[][] getExecCommand(String fileName){
+    public String[][] getExecCommand(String fileName) {
         return null;
     }
 
     /**
-     * 该编程语言的文件名
+     * 该编程语言的文件后缀名
+     *
+     * @return
      */
-    public String getFileName(){return null;}
+    public String getFileNameSuffix(){
+        return null;
+    }
+
+    /**
+     * 判断该镜像名是否为该语言环境
+     *
+     * @param imageName
+     * @return
+     */
+    public boolean isImageName(String imageName) {
+        return imageName.equalsIgnoreCase(getImageName());
+    }
 }
