@@ -6,4 +6,7 @@ target/
 db.properties
 docker.properties
 user.properties
-*.xml
+.classpath
+/LICENSE
+/runcodeNetty.iml
+/runcodeNettyWithJava.iml
