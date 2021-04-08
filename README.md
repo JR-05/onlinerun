@@ -6,27 +6,11 @@
 
 # 支持功能
 
-## 在线运行代码（Websocket服务）
+## 在线运行代码（Websocket服务和Http服务）
 
 用户前端通过Websocket和后端服务器连接，将编程语言类型、源代码（目前仅支持单文件）传到服务器，服务器交给Docker运行，并将执行过程中实时产生的输出回显给客户端。
 
 ![](https://api.codetool.top/img/15918839477417.png)
-
-### 保存代码（HTTP服务）
-
-保存代码的目的是记录一段代码到数据库、并返回一个插入数据的id，客户端可以根据这个ID来生成一个页面，当访问这个页面的时候查询数据库，将保存的代码显示出来。
-
-**该功能以RestAPI的形式实现，用Netty同时实现了一个HTTP服务器，目前仅支持持有固定密码的人员提交保存请求，尚未做用户身份鉴别相关功能**
-
-![](https://api.codetool.top/img/15918841779849.png)
-
-对应的，当其他用户访问这个页面，就能从数据库取出代码，并显示在网页上：
-
-例如：
-
-https://run.codetool.top/?id=34
-
-![](https://api.codetool.top/img/15918843411006.png)
 
 # 支持在线运行的编程语言
 
@@ -177,35 +161,16 @@ location /runcode {
 
 ## HTTP服务
 
-### `GET /codeSegment/{id}`
+### `POST /run`
 
-根据id获取一段保存的代码，服务端返回数据格式：
-
-```json
-{
-    "success": true/false,
-    "message": "提示信息",
-    "data":{
-        "lang": "cpp/java/python3/golang",
-        "content": "保存的源码"
-    }
-}
-```
-
-若根据id未查到信息，则`success`为false，`data`内不包含数据。
-
-### `POST /codeSegment`
-
-保存一段代码，请求体格式：
+根据语言类型和源码文本，服务端返回数据格式：
 
 ```json
 {
     "langType": "cpp/java/python3/golang",
-    "content": "需要保存的源码",
-    "password": "配置的密码"
+    "content": "需要运行的源码"
 }
 ```
-
 响应格式：
 
 ```json
@@ -213,7 +178,7 @@ location /runcode {
     "success": true/false,
     "message": "提示信息",
     "data":{
-        "id": Number
+        "content": "结果"
     }
 }
 ```
@@ -221,12 +186,6 @@ location /runcode {
 # 有意参与源码编写的请看
 
 ## 技术点
-
-前端技术点（有点拉跨，应该会重写）：
-
-+ CodeMirror代码编辑器
-+ BootStrap
-+ JQuery
 
 后端技术点：
 
@@ -238,10 +197,3 @@ location /runcode {
 
 ![](https://api.codetool.top/img/15919296312266.png)
 
-## 待完善列表
-
-- [ ] 有谁能帮我做个好看点的前端吗请迅速联系我(๑•̀ㅂ•́)و✧ 现在的前端太拉跨了
-- [ ] 编程语言相关信息的枚举可以通过读取配置文件的形式完成，更方便拓展
-- [ ] 前端控制器和`TextWebsocketFrameHandler`中路由分发部分代码耦合度较高，可以改进
-- [ ] 可以加入更多和数据库有关的功能，例如更新代码、加入用户功能等，不过用Netty写HTTP服务会比较挑战，要求具备较高的底层手写能力
-- [ ] ... 
