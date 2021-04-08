@@ -38,8 +38,8 @@ public class ErrorController {
      * @return
      */
     @Ignore
-    public void handle(ChannelHandlerContext ctx, FullHttpRequest request) {
-        this.response(ctx, request, Result.ERROR().msg("请求路径出错！"));
+    public void handle(ChannelHandlerContext ctx, FullHttpRequest request, String errMessage) {
+        this.response(ctx, request, Result.ERROR().msg(errMessage));
     }
 
     /**

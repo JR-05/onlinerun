@@ -23,7 +23,6 @@ public class ApiServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
-
         if (msg instanceof FullHttpRequest) {
             //客户端的请求对象
             FullHttpRequest req = (FullHttpRequest) msg;
@@ -32,12 +31,16 @@ public class ApiServerHandler extends ChannelInboundHandlerAdapter {
             String uri = req.uri();
 
             //根据不同的请求API做不同的处理(路由分发)
-            switch (uri) {
-                case "/run":
-                    codeRunController.handle(ctx, req);
-                    break;
-                default:
-                    errorController.handle(ctx, req);
+            try {
+                switch (uri) {
+                    case "/run":
+                        codeRunController.handle(ctx, req);
+                        break;
+                    default:
+                        errorController.handle(ctx, req, "请求路径出错！");
+                }
+            } catch (Exception e) {
+                errorController.handle(ctx, req, e.getMessage());
             }
         }
     }

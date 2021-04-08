@@ -10,6 +10,9 @@ import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.util.CharsetUtil;
 import org.junit.Ignore;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 /**
  * 处理前端Rest请求
  *
@@ -28,6 +31,10 @@ public class CodeRunController {
     @Ignore
     public void handle(ChannelHandlerContext ctx, FullHttpRequest request) {
         CodeWrapperDTO codeWrapper = JSONUtil.toBean(request.content().toString(CharsetUtil.UTF_8), CodeWrapperDTO.class);
+
+        if (!Arrays.stream(CodeLang.values()).map(it -> it.name()).collect(Collectors.toList()).contains(codeWrapper.getLangType().toUpperCase())) {
+            throw new RuntimeException("语言类型错误");
+        }
 
         dockerJavaClient.exec(CodeLang.valueOf(codeWrapper.getLangType().toUpperCase()), codeWrapper.getContent(), new HttpCallback(ctx, request));
     }

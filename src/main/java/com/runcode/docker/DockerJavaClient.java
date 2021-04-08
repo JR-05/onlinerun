@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public class DockerJavaClient {
-    public DockerClient dockerClient;
+    private DockerClient dockerClient;
     private ConcurrentHashMap<CodeLang, ArrayList<String>> containerIds = new ConcurrentHashMap<>();
     private static DockerJavaClient singleton;
 
@@ -92,9 +92,7 @@ public class DockerJavaClient {
     private DockerClient getDockerClient() {
         DockerCmdExecFactory dockerCmdExecFactory = new JerseyDockerCmdExecFactory().withReadTimeout(20000)
                 .withConnectTimeout(2000);
-        DockerClientConfig config = null;
-
-        config = DefaultDockerClientConfig.createDefaultConfigBuilder()
+        DockerClientConfig config = DefaultDockerClientConfig.createDefaultConfigBuilder()
                 .withDockerHost(DockerConfig.DOCKER_HOST)
 //                关闭加密通信
 //                .withDockerTlsVerify(true)
@@ -128,13 +126,13 @@ public class DockerJavaClient {
         String containerId = containerIds.get(new Random().nextInt(containerIds.size()));
 
         // 判断该容器是否可运行，不可运行的话获取其他的容器重新判断，否则直接返回该容器id
-        if (this.isAlive(containerId)) {
+        if (this.isRunning(containerId)) {
             return containerId;
         } else {
             Iterator<String> iterator = containerIds.iterator();
             String containerIdNext = iterator.next();
 
-            if (containerIdNext.equals(containerId) || this.isAlive(containerId)) {
+            if (containerIdNext.equals(containerId) || this.isRunning(containerId)) {
                 containerId = null;
                 iterator.remove();
             } else {
@@ -174,7 +172,7 @@ public class DockerJavaClient {
      * @param containerId
      * @return
      */
-    private boolean isAlive(String containerId) {
+    private boolean isRunning(String containerId) {
         return !this.dockerClient.listContainersCmd()
                 .withIdFilter(Arrays.asList(containerId))
                 .withStatusFilter(Arrays.asList("running"))

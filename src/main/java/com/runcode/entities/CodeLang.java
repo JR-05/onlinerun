@@ -47,7 +47,8 @@ public enum CodeLang {
 
         @Override
         public String[][] getExecCommand(String fileName) {
-            return new String[][]{{"g++", fileName, "-o", "temp"}, {"./temp"}};
+            String encodeFileName = fileName.split("\\.")[0];
+            return new String[][]{{"g++", fileName, "-o", encodeFileName}, {String.format("./%s", encodeFileName)}};
         }
 
         @Override
@@ -132,7 +133,7 @@ public enum CodeLang {
      *
      * @return
      */
-    public String getFileNameSuffix(){
+    public String getFileNameSuffix() {
         return null;
     }
 
