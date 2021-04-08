@@ -26,9 +26,9 @@ public class ServerBootStrap {
 //                "    print(\"hello codetool!\")\n";
 //        dockerJavaClient.exec(CodeLang.PYTHON3, python, new RunCodeResultCallback(null));
 
-       ExecutorService executorService = new ThreadPoolExecutor(2, 2, 0, TimeUnit.MICROSECONDS,new SynchronousQueue<>());
+        ExecutorService executorService = new ThreadPoolExecutor(2, 2, 0, TimeUnit.MICROSECONDS, new SynchronousQueue<>());
         // 启动websocket服务器
-        executorService.execute(()->{
+        executorService.execute(() -> {
             try {
                 new WebsocketServer().startup();
             } catch (Exception e) {
@@ -36,7 +36,7 @@ public class ServerBootStrap {
             }
         });
         // 启动http服务器
-        executorService.execute(()->{
+        executorService.execute(() -> {
             try {
                 new RestApiServer().startup();
             } catch (InterruptedException e) {
